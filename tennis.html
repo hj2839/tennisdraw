@@ -1056,23 +1056,21 @@
     });
     html += '</div>';
 
-    // 개인별 출전 순서 (휴식이 있는 경우만)
-    if (state.n > 4) {
-      html += '<table class="rank grid"><thead><tr><th class="nm">이름 (경기수)</th>';
-      for (var i = 0; i < G; i++) html += '<th>' + (i + 1) + '</th>';
-      html += '</tr></thead><tbody>';
-      var cnt = scheduleCounts();
-      state.names.forEach(function (nm, p) {
-        html += '<tr data-gp="' + p + '"><td class="nm">' + esc(nm) + ' <span class="cnt">(' + cnt[p] + ')</span></td>';
-        state.schedule.forEach(function (g, gi) {
-          var on = g.a.indexOf(p) >= 0 || g.b.indexOf(p) >= 0;
-          html += '<td>' + (on ? '<span class="dot" data-gc="' + gi + '"></span>' : '<span class="off">휴</span>') + '</td>';
-        });
-        html += '</tr>';
+    // 개인별 출전 표 (경기별 출전·파트너 확인용, 4명도 표시)
+    html += '<table class="rank grid"><thead><tr><th class="nm">이름 (경기수)</th>';
+    for (var i = 0; i < G; i++) html += '<th>' + (i + 1) + '</th>';
+    html += '</tr></thead><tbody>';
+    var cnt = scheduleCounts();
+    state.names.forEach(function (nm, p) {
+      html += '<tr data-gp="' + p + '"><td class="nm">' + esc(nm) + ' <span class="cnt">(' + cnt[p] + ')</span></td>';
+      state.schedule.forEach(function (g, gi) {
+        var on = g.a.indexOf(p) >= 0 || g.b.indexOf(p) >= 0;
+        html += '<td>' + (on ? '<span class="dot" data-gc="' + gi + '"></span>' : '<span class="off">휴</span>') + '</td>';
       });
-      html += '</tbody></table>';
-      html += '<p class="dot-legend" id="gridHint"></p>';
-    }
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+    html += '<p class="dot-legend" id="gridHint"></p>';
     html += '</div>';
     var card = document.getElementById('bracketCard');
     card.innerHTML = html;
