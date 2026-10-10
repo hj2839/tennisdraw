@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f6f43">
+<title>Tennis Draw</title>
+<noscript><meta http-equiv="refresh" content="0; url=tennis.html"></noscript>
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; }
+  body {
+    background: #f3f5f2;
+    color: #1d2420;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    font-size: 17px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+  }
+  .box { padding: 24px 16px; }
+  h1 { font-size: 22px; margin: 0 0 8px; color: #1f6f43; }
+  p { margin: 0 0 16px; color: #6b756f; font-size: 15px; }
+  a.btn {
+    display: inline-block; padding: 12px 24px; border-radius: 10px;
+    background: #1f6f43; color: #fff; text-decoration: none; font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>Tennis Draw</h1>
+  <p id="msg">불러오는 중…</p>
+  <a class="btn" href="tennis.html">시작하기</a>
+</div>
+<script>
+  (function () {
+    // 쿼리·해시를 유지한 채 tennis.html 로 이동 (replace: 뒤로가기 시 이 페이지로 돌아오지 않음)
+    var target = new URL('tennis.html', location.href);
+    target.search = location.search;
+    target.hash = location.hash;
+
+    // 카카오톡 인앱 브라우저는 저장(localStorage)이 유지되지 않을 수 있어 외부 브라우저로 열기를 시도
+    if (/KAKAOTALK/i.test(navigator.userAgent)) {
+      document.getElementById('msg').textContent = '외부 브라우저(크롬/사파리)로 여는 중…';
+      location.href = 'kakaotalk://web/openExternal?url=' + encodeURIComponent(target.href);
+      setTimeout(function () { location.replace(target.href); }, 1500);
+      return;
+    }
+    location.replace(target.href);
+  })();
+</script>
+</body>
+</html>
